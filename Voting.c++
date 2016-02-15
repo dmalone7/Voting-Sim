@@ -23,15 +23,14 @@ string voting_solve(istream &r, ostream &w) {
   int ballots[MAX_BALLOTS][MAX_CANDIDATES];
   string s, end;
 
-
   num_cases = -1;
   num_candidates = -1;
   loop_candidates = -1;
   current_ballot = 0;
-  end = "\n";
+  end = "";
 
   getline(r, s);
-  num_cases = atoi(s);
+  num_cases = stoi(s);
   w << num_cases << endl;
 
   getline(r, s); // consume new line character
@@ -39,11 +38,11 @@ string voting_solve(istream &r, ostream &w) {
   // if num_cases == 1, look for EOF instead of '\n'
   while(num_cases > 0) {
     getline(r, s);
-    num_candidates = atoi(s);
+    num_candidates = stoi(s);
     w << num_candidates << endl;
 
     if(num_cases == 1) {
-      end = string(EOF);
+      end = string(1, EOF);
     }
 
     if(num_candidates == 0) {
@@ -56,27 +55,31 @@ string voting_solve(istream &r, ostream &w) {
       int j = 0;
       while(loop_candidates > 0) {
         getline(r, s);
-        candidates.add(s);
+        candidates.push_back(s);
         w << candidates[j++] << endl;
         --loop_candidates;
       }
     }
 
-    // strange case where num_candidates == 0 and num_cases == 1 still works; s != end immediately terminates while
+    // strange case where num_candidates == 0 and num_cases == 1 
+    // still works; s != end immediately terminates while
+
     // while still lines in the test case
-    while(getline(r, s) && s != end) {
+    while(getline(r, s) && s.compare(end) != 0) {
       istringstream sin(s);
-      w << s << endl;
 
       for(int i = 0; i < num_candidates; ++i) {
         sin >> ballots[current_ballot][i];
+        w << ballots[current_ballot][i] << " ";
       }
 
-      ++current_ballots;
+      w << endl;
+      ++current_ballot;
     }
 
     // reset vector
     --num_cases;
+    w << endl;
   }
   return "";
 }

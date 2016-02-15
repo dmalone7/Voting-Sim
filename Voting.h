@@ -10,11 +10,11 @@ const int MAX_BALLOTS = 1000;
 
 class Candidate {
   // Holds ballots and candidate name
-}
+};
 
 class Ballot {
   // Holds ordered data about which candidate is currently being voted for
-}
+};
 
 /* creates vector of candidates - LATER VERSION */
 // vector<Candidate> voting_read(const string &s);
