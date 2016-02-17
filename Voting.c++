@@ -6,18 +6,13 @@
 
 using namespace std;
 
-int main(void) {
-  voting_solve(cin, cout);
-  return 0;
-}
-
 /* given all test cases as a string, read and return the winners as a string */
 string voting_read(const string &s) {
-
+  return "";
 }
 
 /* calls voting_read given reading and writing streams and prints the winners */
-string voting_solve(istream &r, ostream &w) {
+void voting_solve(istream &r, ostream &w) {
   vector<string> candidates;
   int num_cases, num_candidates, loop_candidates, current_ballot;
   int ballots[MAX_BALLOTS][MAX_CANDIDATES];
@@ -68,18 +63,19 @@ string voting_solve(istream &r, ostream &w) {
     while(getline(r, s) && s.compare(end) != 0) {
       istringstream sin(s);
 
-      for(int i = 0; i < num_candidates; ++i) {
+      for(int i = 0; i < num_candidates - 1; ++i) {
         sin >> ballots[current_ballot][i];
         w << ballots[current_ballot][i] << " ";
       }
 
-      w << endl;
+      sin >> ballots[current_ballot][num_candidates - 1];
+      w << ballots[current_ballot][num_candidates - 1] << endl;
       ++current_ballot;
     }
 
     // reset vector
+    candidates.clear();
     --num_cases;
     w << endl;
   }
-  return "";
 }

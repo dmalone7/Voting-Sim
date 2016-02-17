@@ -30,4 +30,4 @@ class Ballot {
 string voting_read(const string &s);
 
 /* calls voting_read given reading and writing streams and prints the winners */
-string voting_solve(istream &r, ostream &w);
+void voting_solve(istream &r, ostream &w);
