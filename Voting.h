@@ -8,12 +8,49 @@ using namespace std;
 const int MAX_CANDIDATES = 20;
 const int MAX_BALLOTS = 1000;
 
-class Candidate {
-  // Holds ballots and candidate name
+#include <string> // string, u16string
+
+
+// Holds ordered data about which candidate is currently being voted for
+class Ballot {
+private:
+  vector<int> votes;
+public:
+  int getVotesLeft(void); // Returns the size of the "votes" vector.
+  int nextVote(void);     // Remove a vote from the front of the "votes" vector
+                          // and returns the candidate index of the removed vote
+  void addVote(int v);    // Adds a vote to the back of the "votes" vector
+  int peekVote(void);     // Returns the number of the candidate currently at the 
+                          // front of the "votes" vector without removing it.
 };
 
-class Ballot {
-  // Holds ordered data about which candidate is currently being voted for
+class Candidate {
+private:
+  vector<Ballot> ballots; 
+  int numVotes = 0;           // Number of votes for the current cycle
+  int candidateIndex;         // The number in which the candidate appeared in the 
+                              // input.
+  string name;          
+public:
+  Candidate(string n, int i);
+  vector<Ballot> countBallot(int s); // Given @param "s" size, find all Ballots with size "s" and
+                                     // removes them. @return vector is a list of the ballots which
+                                     // were removed.
+  void addBallot(Ballot &b);         // Adds a ballot to the vector of Ballots - usually called
+                                     // from the context of a Ballot being removed from another
+                                     // Candidate.
+  int getIndex(void);         
+  int getNumVotes(void);
+  string getName(void);
+};
+
+class Election {
+private:
+  vector<Candidate> candidates;
+public:
+  void insert(Candidate &c);
+  vector<Candidate> & findWinners(void);
+  void addBallot(Ballot &b);             // Calls 
 };
 
 /* creates vector of candidates - LATER VERSION */
