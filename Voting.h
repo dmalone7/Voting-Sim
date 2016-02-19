@@ -14,6 +14,7 @@ const int MAX_BALLOTS = 1000;
 class Ballot {
 private:
   vector<int> votes;
+  int index = 0;
 public:
   /**
    * Create an empty ballot.
@@ -62,6 +63,7 @@ private:
   vector<Ballot> ballots; 
   int numVotes = 0;           
   int candidateIndex;         
+  int index = 0;
   string name;          
 public:
   /** 
@@ -79,6 +81,8 @@ public:
    * @param b the ballot to add
    */
   void addBallot(Ballot b); 
+
+  void resetNumVotes(void);
 
   /** 
    * @return this Candidate's index
@@ -101,13 +105,13 @@ public:
  */
 class Election {
 private:
-  vector<Candidate> candidates;
+  vector<Candidate*> candidates;
   int numBallots = 0;
 public:
   /** 
    * @param c the Candidate to add to this Election
    */
-  void insert(Candidate c);
+  void insert(Candidate *c);
 
   /** 
    * @return the number of Candidates in this Election
@@ -117,7 +121,7 @@ public:
   /** 
    * @return the Candidate who won (or those who tied, in the order they appear in the input)
    */
-  vector<Candidate> findWinners(void);
+  vector<Candidate*> findWinners(void);
 
   /** 
    * @param b the Ballot to give to a Candidate in this Election
