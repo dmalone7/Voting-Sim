@@ -8,6 +8,9 @@ using namespace std;
 const int MAX_CANDIDATES = 20;
 const int MAX_BALLOTS = 1000;
 
+/**
+ * A single ballot that contains an ordered list of Candidate indices.
+ */
 class Ballot {
 private:
   vector<int> votes;
@@ -35,16 +38,19 @@ public:
   int nextVote(void);    
 
   /**
-   * 
+   * @param the vote to add
    */
   void addVote(int v);   
 
   /**
-   * 
+   * @return the next vote (not removed)
    */
   int peekVote(void);     
 };
 
+/**
+ * A candidate in an election that holds a number of Ballots and votes
+ */
 class Candidate {
 private:
   vector<Ballot> ballots; 
@@ -52,38 +58,75 @@ private:
   int candidateIndex;         
   u16string name;          
 public:
+  /** 
+   * @param n name of the Candidate
+   * @param i the index of the Candidate
+   */
   Candidate(u16string n, int i);
+
+  /** 
+   * @return the removed ballot which has had the first Candidate index removed
+   */
   Ballot removeBallot(void);
+
+  /** 
+   * @param b the ballot to add
+   */
   void addBallot(Ballot b); 
+
+  /** 
+   * @return this Candidate's index
+   */
   int getIndex(void);       
+
+  /** 
+   * @return the number of votes for this Candidate
+   */
   int getNumVotes(void);
+
+  /** 
+   * @return the name of this Candidate
+   */
   u16string getName(void);
 };
 
+/**
+ * Represents a number of Candidates in an Aussie election.
+ */
 class Election {
 private:
   vector<Candidate> candidates;
   int numBallots = 0;
 public:
+  /** 
+   * @param c the Candidate to add to this Election
+   */
   void insert(Candidate c);
+
+  /** 
+   * @return the number of Candidates in this Election
+   */
   int getNumCandidates(void);
+
+  /** 
+   * @return the Candidate who won (or those who tied, in the order they appear in the input)
+   */
   vector<Candidate> findWinners(void);
-  void addBallot(Ballot b);             // Calls
+
+  /** 
+   * @param b the Ballot to give to a Candidate in this Election
+   */
+  void addBallot(Ballot b); 
+
+  /** 
+   * @return the number of Ballots submitted to this Election
+   */
   int getNumBallots(void);
 };
 
-/* creates vector of candidates - LATER VERSION */
-// vector<Candidate> voting_read(const u16string &s);
-
-/* given vector of candidates and determines winner */
-// vector<Candidate> voting_eval(vector<Candidate> c);
-
-/* prints the winner(s) */
-// void voting_print(ostream &w, const u16string &s);
-
-
-/* given all test cases as a u16string, read and return the winners as a u16string */
-u16string voting_read(const u16string &s);
-
-/* calls voting_read given reading and writing streams and prints the winners */
+/**
+ * Calls voting_read given reading and writing streams and prints the winners
+ * @param r the reading stream
+ * @param w the writing stream
+ */
 void voting_solve(istream &r, ostream &w);
