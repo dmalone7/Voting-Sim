@@ -105,13 +105,13 @@ public:
  */
 class Election {
 private:
-  vector<Candidate*> candidates;
+  vector<Candidate> candidates;
   int numBallots = 0;
 public:
   /** 
    * @param c the Candidate to add to this Election
    */
-  void insert(Candidate *c);
+  void insert(Candidate c);
 
   /** 
    * @return the number of Candidates in this Election
@@ -121,7 +121,7 @@ public:
   /** 
    * @return the Candidate who won (or those who tied, in the order they appear in the input)
    */
-  vector<Candidate*> findWinners(void);
+  vector<Candidate> findWinners(void);
 
   /** 
    * @param b the Ballot to give to a Candidate in this Election
