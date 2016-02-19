@@ -1,3 +1,9 @@
+// ----------------------------
+// cs371p-collatz/Voting.h
+// Copyright (C) 2016
+// Alex and David
+// ----------------------------
+
 #include <iostream> // cout, endl
 #include <sstream>  // istringtstream, ostringstream
 #include <string>   // string
