@@ -15,14 +15,14 @@ using namespace std;
 // -----
 
 TEST(VotingFixture, ballot_1) {
-  Ballot b();
-  ASSERT_EQ(b., 0);
+  Ballot b = Ballot();
+  ASSERT_EQ(b.getVotesLeft(), 0);
 }
 
 TEST(VotingFixture, add_1) {
    Ballot b({1, 2});
    b.addVote(3);
-   //ASSERTEQ(
+   ASSERT_EQ(b.getVotesLeft(), 3);
 }
 
 // ---------
