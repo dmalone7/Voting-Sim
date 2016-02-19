@@ -49,11 +49,13 @@ public:
 class Election {
 private:
   vector<Candidate> candidates;
+  int numBallots = 0;
 public:
   void insert(Candidate c);
   int getNumCandidates(void);
   vector<Candidate> findWinners(void);
   void addBallot(Ballot b);             // Calls
+  int getNumBallots(void);
 };
 
 /* creates vector of candidates - LATER VERSION */

@@ -49,6 +49,7 @@ Ballot Candidate::removeBallot(void) {
   if(ballots.empty())
     return Ballot();
 
+  int oldsize = ballots.size();
   // Make a copy
   ballots[0].nextVote();
   Ballot ballotCopy(ballots[0]);
@@ -91,6 +92,7 @@ vector<Candidate> Election::findWinners(void) {
 
   int numLosers = 0;
   while(numLosers == 0) {
+    int tiedBallots = 0;
     numLosers = 0;
     max = -1;
     tieFound = false;
@@ -111,24 +113,43 @@ vector<Candidate> Election::findWinners(void) {
     if(tieFound) {
       for(int i = 0; i < numCandidates; ++i) {
         Candidate c = candidates[i];
+        cout << "found tie\n";
         if(c.getNumVotes() < max) {
+          cout << "loser index = " << c.getIndex() << endl;
           tieFound = false;
-          ++numLosers;
+          // ++numLosers;
           // they are a loser, remove all of their ballots and try to give them to a winner
           Ballot loserBallot;
           while((loserBallot = c.removeBallot()).getVotesLeft() != 0) {
+            cout << "removing ballot from candidate " << c.getName() << ", next vote for ";
             int nextIndex;
             // still finding losers in the Ballot
             nextIndex = loserBallot.peekVote();
             while(nextIndex > -1 && candidates[nextIndex - 1].getNumVotes() < max) {
               nextIndex = loserBallot.nextVote();
+              cout << nextIndex << ", ";
             }
+            cout << endl;
             if(nextIndex > -1) {
+              Candidate d = candidates[nextIndex - 1];
+              Candidate b = candidates[nextIndex];
               candidates[nextIndex - 1].addBallot(loserBallot);
+              cout << "after: " << d.getName() << ", votes = " << d.getNumVotes() << endl;
+              cout << "after: " << b.getName() << ", votes = " << b.getNumVotes() << endl;
               assert(candidates[nextIndex - 1].getNumVotes() >= max);
+              numLosers = 0;
             }
           }
         }
+        else {
+          // they should be someone who tied 
+          cout << "found a tied person : " << c.getName() << endl;
+          tiedBallots += c.getNumVotes();
+          // There are no more ballots to give away
+          if(tiedBallots == numBallots)
+            break;
+        }
+
         if (tieFound) {
           ++numLosers;
         }
@@ -153,7 +174,12 @@ vector<Candidate> Election::findWinners(void) {
 
 void Election::addBallot(Ballot b) {
   int candIndex = b.peekVote();
+  ++numBallots;
   candidates[candIndex - 1].addBallot(b);
+}
+
+int Election::getNumBallots(void) { 
+  return numBallots;
 }
 
 ////////////////////////////////////
