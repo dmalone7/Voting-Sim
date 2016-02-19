@@ -1,3 +1,4 @@
+#include <cassert>
 #include <iostream> // endl, istream, ostream
 #include <sstream>  // istringstream
 #include <string>   // getline, string
@@ -5,6 +6,157 @@
 #include "Voting.h"
 
 using namespace std;
+
+Ballot::Ballot() { }
+
+Ballot::Ballot(const Ballot &source) {
+  votes = source.votes;
+}
+
+int Ballot::getVotesLeft(void) {
+  return votes.size();
+}
+
+int Ballot::nextVote(void) {
+  // No votes left for this candidate.
+  if(votes.empty())
+    return 0;
+
+  int ret = votes[0];
+  votes.erase(votes.begin());
+  return ret;
+} 
+
+void Ballot::addVote(int v) {
+  votes.push_back(v);
+}
+
+int Ballot::peekVote(void) {
+  if(votes.size() > 0)
+    return votes[0];
+  else return -1;
+}
+
+////////////////////////////////////
+
+Candidate::Candidate(string n, int i) {
+  name = n;
+  candidateIndex = i;
+}
+
+// remove a ballot from a candidate, removing that Candidate from the Ballot
+Ballot Candidate::removeBallot(void) {
+  if(ballots.empty())
+    return Ballot();
+
+  // Make a copy
+  ballots[0].nextVote();
+  Ballot ballotCopy(ballots[0]);
+  ballots.erase(ballots.begin());
+  return ballotCopy;
+}
+
+void Candidate::addBallot(Ballot b) {
+  ++numVotes;
+  ballots.push_back(b);
+}
+
+int Candidate::getIndex(void) {
+  return candidateIndex;
+}
+
+int Candidate::getNumVotes(void) {
+  return numVotes;
+}
+
+string Candidate::getName(void) {
+  return name;
+}
+
+////////////////////////////////////
+
+void Election::insert(Candidate c) {
+  candidates.push_back(c);
+}
+
+int Election::getNumCandidates(void) {
+  return candidates.size();
+}
+
+vector<Candidate> Election::findWinners(void) {
+  vector<Candidate> winners;
+  int numCandidates = candidates.size();
+  int max, currentVotes;
+  bool tieFound;
+
+  int numLosers = 0;
+  while(numLosers == 0) {
+    numLosers = 0;
+    max = -1;
+    tieFound = false;
+    for(int i = 0; i < numCandidates; ++i) {
+      Candidate c = candidates[i];
+      currentVotes = c.getNumVotes();
+      if(max < currentVotes) {
+        max = currentVotes;
+        tieFound = false;
+      }
+
+      else if(max == currentVotes) {
+        tieFound = true;
+      }
+      cout << "max is " << max << ", tieFound is " << tieFound << endl;
+    }
+
+    if(tieFound) {
+      for(int i = 0; i < numCandidates; ++i) {
+        Candidate c = candidates[i];
+        if(c.getNumVotes() < max) {
+          tieFound = false;
+          ++numLosers;
+          // they are a loser, remove all of their ballots and try to give them to a winner
+          Ballot loserBallot;
+          while((loserBallot = c.removeBallot()).getVotesLeft() != 0) {
+            int nextIndex;
+            // still finding losers in the Ballot
+            nextIndex = loserBallot.peekVote();
+            while(nextIndex > -1 && candidates[nextIndex - 1].getNumVotes() < max) {
+              nextIndex = loserBallot.nextVote();
+            }
+            if(nextIndex > -1) {
+              candidates[nextIndex - 1].addBallot(loserBallot);
+              assert(candidates[nextIndex - 1].getNumVotes() >= max);
+            }
+          }
+        }
+        if (tieFound) {
+          ++numLosers;
+        }
+      }
+    }
+
+    // SINGLE Winner was found.
+    else {
+      break;
+    }
+  }
+
+  for(int i = 0; i < numCandidates; ++i) {
+    Candidate c = candidates[i];
+    if(c.getNumVotes() == max) {
+      winners.push_back(c);
+    }
+  }
+
+  return winners;
+}
+
+void Election::addBallot(Ballot b) {
+  int candIndex = b.peekVote();
+  candidates[candIndex - 1].addBallot(b);
+}
+
+////////////////////////////////////
 
 /* given all test cases as a string, read and return the winners as a string */
 string voting_read(const string &s) {
@@ -32,6 +184,7 @@ void voting_solve(istream &r, ostream &w) {
 
   // if num_cases == 1, look for EOF instead of '\n'
   while(num_cases > 0) {
+    Election election;
     getline(r, s);
     num_candidates = stoi(s);
     w << num_candidates << endl;
@@ -51,7 +204,11 @@ void voting_solve(istream &r, ostream &w) {
       while(loop_candidates > 0) {
         getline(r, s);
         candidates.push_back(s);
-        w << candidates[j++] << endl;
+        //
+        election.insert(Candidate(s, j + 1));
+        //
+        w << candidates[j] << endl;
+        ++j;
         --loop_candidates;
       }
     }
@@ -63,14 +220,27 @@ void voting_solve(istream &r, ostream &w) {
     while(getline(r, s) && s.compare(end) != 0) {
       istringstream sin(s);
 
+      Ballot b;
       for(int i = 0; i < num_candidates - 1; ++i) {
         sin >> ballots[current_ballot][i];
+        b.addVote(ballots[current_ballot][i]);
         w << ballots[current_ballot][i] << " ";
       }
 
       sin >> ballots[current_ballot][num_candidates - 1];
+      b.addVote(ballots[current_ballot][num_candidates - 1]);
       w << ballots[current_ballot][num_candidates - 1] << endl;
       ++current_ballot;
+
+      //
+      election.addBallot(b);
+      //
+    }
+    vector<Candidate> winners = election.findWinners();
+
+    w << "Winners:\n";
+    for(int i = 0; i < winners.size(); ++i) {
+      w << winners[i].getName() << endl;
     }
 
     // reset vector

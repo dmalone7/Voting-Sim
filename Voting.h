@@ -16,6 +16,8 @@ class Ballot {
 private:
   vector<int> votes;
 public:
+  Ballot();
+  Ballot(const Ballot &source);
   int getVotesLeft(void); // Returns the size of the "votes" vector.
   int nextVote(void);     // Remove a vote from the front of the "votes" vector
                           // and returns the candidate index of the removed vote
@@ -33,10 +35,10 @@ private:
   string name;          
 public:
   Candidate(string n, int i);
-  vector<Ballot> countBallot(int s); // Given @param "s" size, find all Ballots with size "s" and
+  Ballot removeBallot(void); // Given @param "s" size, find all Ballots with size "s" and
                                      // removes them. @return vector is a list of the ballots which
                                      // were removed.
-  void addBallot(Ballot &b);         // Adds a ballot to the vector of Ballots - usually called
+  void addBallot(Ballot b);         // Adds a ballot to the vector of Ballots - usually called
                                      // from the context of a Ballot being removed from another
                                      // Candidate.
   int getIndex(void);         
@@ -48,9 +50,10 @@ class Election {
 private:
   vector<Candidate> candidates;
 public:
-  void insert(Candidate &c);
-  vector<Candidate> & findWinners(void);
-  void addBallot(Ballot &b);             // Calls 
+  void insert(Candidate c);
+  int getNumCandidates(void);
+  vector<Candidate> findWinners(void);
+  void addBallot(Ballot b);             // Calls
 };
 
 /* creates vector of candidates - LATER VERSION */
