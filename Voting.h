@@ -28,9 +28,9 @@ public:
 
   /**
    * Create a ballot from a pre-existing vector of indices
-   * @param votes the vector
+   * @param v the vector
    */
-  Ballot(vector<int> votes);
+  Ballot(vector<int> v);
 
   /**
    * @return the number of votes left in the ballot

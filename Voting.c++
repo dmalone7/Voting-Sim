@@ -13,6 +13,10 @@ Ballot::Ballot(const Ballot &source) {
   votes = source.votes;
 }
 
+Ballot::Ballot(vector<int> v) {
+  votes = v;
+}
+
 int Ballot::getVotesLeft(void) {
   return votes.size();
 }
