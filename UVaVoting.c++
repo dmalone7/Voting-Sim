@@ -264,7 +264,7 @@ vector<Candidate> Election::findWinners(void) {
 
     if(mustRedistribute) {
       for(int i = 0; i < numCandidates; ++i) {
-        Candidate c = candidates[i];
+        Candidate &c = candidates[i];
         if(c.getNumVotes() == min) {
           Ballot loserBallot;
           while((loserBallot = c.removeBallot()).getVotesLeft() != 0) {
@@ -272,16 +272,16 @@ vector<Candidate> Election::findWinners(void) {
             bool foundLoser = false;
             while(!foundLoser && loserBallot.getVotesLeft() > 0) {
               int receiverIndex = loserBallot.nextVote() - 1;
-              Candidate receiver = candidates[receiverIndex];
+              Candidate &receiver = candidates[receiverIndex];
               if(receiver.getNumVotes() > min) {
                 foundLoser = true;
                 // receiver is not a loser
                 receiver.addBallot(loserBallot);
-                candidates[receiverIndex] = receiver;
+                // candidates[receiverIndex] = receiver;
               }
             }
             c.resetNumVotes();
-            candidates[i] = c;
+            // candidates[i] = c;
             assert(candidates[i].getNumVotes() == 0);
           }
         }
