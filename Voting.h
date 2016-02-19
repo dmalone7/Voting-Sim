@@ -131,7 +131,7 @@ public:
 };
 
 /**
- * Calls voting_read given reading and writing streams and prints the winners
+ * Reads from an input stream and finds the winner of an Australian election.
  * @param r the reading stream
  * @param w the writing stream
  */
