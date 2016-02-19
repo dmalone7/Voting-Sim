@@ -64,6 +64,37 @@ TEST(VotingFixture, solve_1) {
   ASSERT_EQ(out, w.str());
 }
 
+TEST(VotingFixture, cand_addBallot1) {
+  Candidate c("one", "1");
+  c.addBallot(Ballot({1, 2, 3}));
+  int v = c.getNumVotes();
+  int r = 1;
+  ASSERT_EQ(v, r);
+}
+
+TEST(VotingFixture, cand_addBallot2) {
+  Candidate c("two", "2");
+  c.addBallot(Ballot({2, 3, 1}));
+  c.addBallot(Ballot({2, 3, 1}));
+  c.addBallot(Ballot({2, 3, 1}));
+  int v = c.getNumVotes();
+  int r = 3;
+  ASSERT_EQ(v, r);
+}
+
+TEST(VotingFixture, cand_addBallot3) {
+  Candidate c("three", "3");
+  c.addBallot(Ballot({3, 2, 1}));
+  c.addBallot(Ballot({2, 3, 1}));
+  c.addBallot(Ballot({2, 3, 1}));
+  c.addBallot(Ballot({2, 3, 1}));
+  c.addBallot(Ballot({2, 3, 1}));
+  c.addBallot(Ballot({2, 3, 1}));
+  c.addBallot(Ballot({2, 3, 1}));
+  int v = c.getNumVotes();
+  int r = 6;
+  ASSERT_EQ(v, r);
+}
 /*
  % g++ -fprofile-arcs -ftest-coverage -pedantic -std=c++11 -Wall Collatz.c++ TestCollatz.c++ -o TestCollatz -lgtest -lgtest_main -lpthread
 
