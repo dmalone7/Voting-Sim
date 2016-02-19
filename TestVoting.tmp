@@ -1,46 +1,51 @@
-==3459== Memcheck, a memory error detector
-==3459== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==3459== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==3459== Command: ./TestVoting
-==3459== 
+==30418== Memcheck, a memory error detector
+==30418== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==30418== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==30418== Command: ./TestVoting
+==30418== 
 Running main() from gtest_main.cc
-[==========] Running 4 tests from 1 test case.
+[==========] Running 8 tests from 1 test case.
 [----------] Global test environment set-up.
-[----------] 4 tests from VotingFixture
+[----------] 8 tests from VotingFixture
+[ RUN      ] VotingFixture.ballot_1
+[       OK ] VotingFixture.ballot_1 (9 ms)
 [ RUN      ] VotingFixture.add_1
-[       OK ] VotingFixture.add_1 (27 ms)
+[       OK ] VotingFixture.add_1 (21 ms)
 [ RUN      ] VotingFixture.solve_1
 [       OK ] VotingFixture.solve_1 (24 ms)
 [ RUN      ] VotingFixture.solve_2
-TestVoting.c++:52: Failure
-Value of: w.str()
-  Actual: "A\nB\n\n"
-Expected: out
-Which is: "A\nB\n"
-[  FAILED  ] VotingFixture.solve_2 (75 ms)
+[       OK ] VotingFixture.solve_2 (53 ms)
 [ RUN      ] VotingFixture.solve_3
-TestVoting.c++:64: Failure
-Value of: w.str()
-  Actual: "A\n\n"
-Expected: out
-Which is: "A\n"
-[  FAILED  ] VotingFixture.solve_3 (26 ms)
-[----------] 4 tests from VotingFixture (159 ms total)
+[       OK ] VotingFixture.solve_3 (24 ms)
+[ RUN      ] VotingFixture.cand_addBallot1
+[       OK ] VotingFixture.cand_addBallot1 (3 ms)
+[ RUN      ] VotingFixture.cand_addBallot2
+[       OK ] VotingFixture.cand_addBallot2 (5 ms)
+[ RUN      ] VotingFixture.cand_addBallot3
+[       OK ] VotingFixture.cand_addBallot3 (9 ms)
+[----------] 8 tests from VotingFixture (154 ms total)
 
 [----------] Global test environment tear-down
-[==========] 4 tests from 1 test case ran. (183 ms total)
-[  PASSED  ] 2 tests.
-[  FAILED  ] 2 tests, listed below:
-[  FAILED  ] VotingFixture.solve_2
-[  FAILED  ] VotingFixture.solve_3
-
- 2 FAILED TESTS
-==3459== 
-==3459== HEAP SUMMARY:
-==3459==     in use at exit: 0 bytes in 0 blocks
-==3459==   total heap usage: 553 allocs, 553 frees, 73,226 bytes allocated
-==3459== 
-==3459== All heap blocks were freed -- no leaks are possible
-==3459== 
-==3459== For counts of detected and suppressed errors, rerun with: -v
-==3459== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[==========] 8 tests from 1 test case ran. (179 ms total)
+[  PASSED  ] 8 tests.
+==30418== 
+==30418== HEAP SUMMARY:
+==30418==     in use at exit: 0 bytes in 0 blocks
+==30418==   total heap usage: 585 allocs, 585 frees, 63,879 bytes allocated
+==30418== 
+==30418== All heap blocks were freed -- no leaks are possible
+==30418== 
+==30418== For counts of detected and suppressed errors, rerun with: -v
+==30418== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+File 'Voting.c++'
+Lines executed:93.92% of 148
+Branches executed:98.88% of 178
+Taken at least once:61.24% of 178
+Calls executed:80.13% of 156
+Creating 'Voting.c++.gcov'
+File 'TestVoting.c++'
+Lines executed:100.00% of 55
+Branches executed:78.52% of 298
+Taken at least once:39.26% of 298
+Calls executed:62.31% of 390
+Creating 'TestVoting.c++.gcov'

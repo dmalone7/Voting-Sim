@@ -15,14 +15,14 @@ using namespace std;
 // -----
 
 TEST(VotingFixture, ballot_1) {
-  Ballot b();
-  ASSERT_EQ(b., 0);
+  Ballot b = Ballot();
+  ASSERT_EQ(b.getVotesLeft(), 0);
 }
 
 TEST(VotingFixture, add_1) {
    Ballot b({1, 2});
    b.addVote(3);
-   //ASSERTEQ(
+   ASSERT_EQ(b.getVotesLeft(), 3);
 }
 
 // ---------
@@ -70,7 +70,7 @@ TEST(VotingFixture, solve_3) {
 }
 
 TEST(VotingFixture, cand_addBallot1) {
-  Candidate c("one", "1");
+  Candidate c("one", 1);
   c.addBallot(Ballot({1, 2, 3}));
   int v = c.getNumVotes();
   int r = 1;
@@ -78,7 +78,7 @@ TEST(VotingFixture, cand_addBallot1) {
 }
 
 TEST(VotingFixture, cand_addBallot2) {
-  Candidate c("two", "2");
+  Candidate c("two", 2);
   c.addBallot(Ballot({2, 3, 1}));
   c.addBallot(Ballot({2, 3, 1}));
   c.addBallot(Ballot({2, 3, 1}));
@@ -88,7 +88,7 @@ TEST(VotingFixture, cand_addBallot2) {
 }
 
 TEST(VotingFixture, cand_addBallot3) {
-  Candidate c("three", "3");
+  Candidate c("three", 3);
   c.addBallot(Ballot({3, 2, 1}));
   c.addBallot(Ballot({2, 3, 1}));
   c.addBallot(Ballot({2, 3, 1}));
@@ -97,7 +97,7 @@ TEST(VotingFixture, cand_addBallot3) {
   c.addBallot(Ballot({2, 3, 1}));
   c.addBallot(Ballot({2, 3, 1}));
   int v = c.getNumVotes();
-  int r = 6;
+  int r = 7;
   ASSERT_EQ(v, r);
 }
 /*
