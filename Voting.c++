@@ -19,7 +19,6 @@ Ballot::Ballot(vector<int> v) {
 
 int Ballot::getVotesLeft(void) {
   return votes.size() - index;
-  // return votes.size();
 }
 
 int Ballot::nextVote(void) {
@@ -28,7 +27,6 @@ int Ballot::nextVote(void) {
     return 0;
 
   int ret = votes[index++];
-  // // // // // // // // // // // // // // cout << "next vote returned " << ret << endl;
   return ret;
 } 
 
@@ -52,7 +50,7 @@ Candidate::Candidate(string n, int i) {
 
 // remove a ballot from a candidate, removing that Candidate from the Ballot
 Ballot Candidate::removeBallot(void) {
-  if(index == ballots.size())
+  if(index == (int) ballots.size())
     return Ballot();
 
   return ballots[index++];
@@ -60,7 +58,6 @@ Ballot Candidate::removeBallot(void) {
 
 void Candidate::resetNumVotes(void) {
   numVotes = 0;
-  // index = ballots.size()
 }
 
 void Candidate::addBallot(Ballot b) {
@@ -100,12 +97,11 @@ vector<Candidate> Election::findWinners(void) {
   int max, currentVotes, min;
   bool mustRedistribute;
 
-  int numLosers = 0;
-  while(numLosers == 0) {
+  while(1) {
     min = 10000; 
-    numLosers = 0;
     max = -1;
     mustRedistribute = true;
+
     for(int i = 0; i < numCandidates; ++i) {
       Candidate c = candidates[i];
       currentVotes = c.getNumVotes();
@@ -113,46 +109,44 @@ vector<Candidate> Election::findWinners(void) {
         max = currentVotes;
 
         if(currentVotes >= (numBallots / 2 + 1))  
-          mustRedistribute = false;
+          {
+            mustRedistribute = false;
+          }
       }
 
-      if(currentVotes != 0 && min > currentVotes) {
+      if(currentVotes > 0 && min > currentVotes) {
         min = currentVotes;
       }
     }
 
-    // printf("min = %d, max = %d\n", min, max);
-
     if(max == min) {
-      // // // // // // // // // // // // // // cout << "SOULD BE STOPING NOW" << endl;
       mustRedistribute = false;
     }
 
     if(mustRedistribute) {
-      // // // // // // // // // // // // // // // cout << "Looking for losers\n";
       for(int i = 0; i < numCandidates; ++i) {
         Candidate c = candidates[i];
         if(c.getNumVotes() == min) {
-          // have a loser now, c === loser
-
-          // // // // // // // // // // // // // // // // cout << "we have a loser. name is " << c.getName() << endl;
-
-          // // // // // // // // // // // // // // // // cout << "loser has " << c.getNumVotes() << endl;
-          Ballot loserBallot = c.removeBallot();
-          while(loserBallot.getVotesLeft() > 0) {
-            Candidate receiver = candidates[loserBallot.nextVote() - 1];
-            if(receiver.getNumVotes() > min) {
-              // receiver is not a loser
-              receiver.addBallot(loserBallot);
+          Ballot loserBallot;
+          while((loserBallot = c.removeBallot()).getVotesLeft() != 0) {
+            // have a loser now, c === loser
+            bool foundLoser = false;
+            while(!foundLoser && loserBallot.getVotesLeft() > 0) {
+              int receiverIndex = loserBallot.nextVote() - 1;
+              Candidate receiver = candidates[receiverIndex];
+              if(receiver.getNumVotes() > min) {
+                foundLoser = true;
+                // receiver is not a loser
+                receiver.addBallot(loserBallot);
+                candidates[receiverIndex] = receiver;
+              }
             }
+            c.resetNumVotes();
+            candidates[i] = c;
+            assert(candidates[i].getNumVotes() == 0);
           }
-          c.resetNumVotes();
-          candidates[i] = c;
-          assert(candidates[i].getNumVotes() == 0);
-          // // // // // // // // // // // // // // // cout << "loser now has " << c.getNumVotes() << endl;
         }
       }
-      // // // // // // // // // // // // // // // cout << "STOPPED looking for losers\n";
     }
 
     else {
@@ -190,18 +184,14 @@ void voting_solve(istream &r, ostream &w) {
 
   getline(r, s);
   num_cases = stoi(s);
-  //w << num_cases << endl;
 
   getline(r, s); // consume new line character
 
   // if num_cases == 1, look for EOF instead of '\n'
   while(num_cases > 0) {
-    static int count = 1;
-    // w << "Count = " << count++ << endl;
     Election election;
     getline(r, s);
     num_candidates = stoi(s);
-    //w << num_candidates << endl;
 
     if(num_cases == 1) {
       end = string(1, EOF);
@@ -222,9 +212,6 @@ void voting_solve(istream &r, ostream &w) {
       }
     }
 
-    // strange case where num_candidates == 0 and num_cases == 1 
-    // still works; s != end immediately terminates while
-
     // while still lines in the test case
     while(getline(r, s) && s.compare(end) != 0) {
       istringstream sin(s);
@@ -244,7 +231,7 @@ void voting_solve(istream &r, ostream &w) {
     }
     vector<Candidate> winners = election.findWinners();
 
-    for(int i = 0; i < (int)winners.size(); ++i) {
+    for(int i = 0; i < (int) winners.size(); ++i) {
       w << winners[i].getName() << endl;
     }
 
