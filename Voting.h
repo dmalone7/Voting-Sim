@@ -1,7 +1,7 @@
 #include <iostream> // endl, istream, ostream
 #include <sstream>  // istringstream
 #include <vector>   // vector
-#include <string>   // getline, string, u16string
+#include <string>   // getline, string, string
 
 using namespace std;
 
@@ -25,6 +25,12 @@ public:
    * @param source the source ballot
    */
   Ballot(const Ballot &source);
+
+  /**
+   * Create a ballot from a pre-existing vector of indices
+   * @param votes the vector
+   */
+  Ballot(vector<int> votes);
 
   /**
    * @return the number of votes left in the ballot
@@ -56,13 +62,13 @@ private:
   vector<Ballot> ballots; 
   int numVotes = 0;           
   int candidateIndex;         
-  u16string name;          
+  string name;          
 public:
   /** 
    * @param n name of the Candidate
    * @param i the index of the Candidate
    */
-  Candidate(u16string n, int i);
+  Candidate(string n, int i);
 
   /** 
    * @return the removed ballot which has had the first Candidate index removed
@@ -87,7 +93,7 @@ public:
   /** 
    * @return the name of this Candidate
    */
-  u16string getName(void);
+  string getName(void);
 };
 
 /**
