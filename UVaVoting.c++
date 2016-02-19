@@ -1,5 +1,10 @@
+// ----------------------------
+// cs371p-collatz/Voting.h
+// Copyright (C) 2016
+// Alex and David
+// ----------------------------
 
-#include <cassert>
+#include <cassert>  // assert
 #include <iostream> // endl, istream, ostream
 #include <sstream>  // istringstream
 #include <string>   // getline, string
