@@ -379,8 +379,9 @@ void voting_solve(istream &r, ostream &w) {
       w << winners[i].getName() << endl;
     }
 
-    // reset vector
+    if(num_cases > 1)
+      w << endl;
+
     --num_cases;
-    w << endl;
   }
 }
