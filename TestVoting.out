@@ -1,37 +1,147 @@
-==9737== Memcheck, a memory error detector
-==9737== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==9737== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==9737== Command: ./TestVoting
-==9737== 
+==2923== Memcheck, a memory error detector
+==2923== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==2923== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==2923== Command: ./TestVoting
+==2923== 
 Running main() from gtest_main.cc
-[==========] Running 1 test from 1 test case.
+[==========] Running 56 tests from 1 test case.
 [----------] Global test environment set-up.
-[----------] 1 test from VotingFixture
+[----------] 56 tests from VotingFixture
+[ RUN      ] VotingFixture.ballot_1
+[       OK ] VotingFixture.ballot_1 (9 ms)
+[ RUN      ] VotingFixture.ballot_2
+[       OK ] VotingFixture.ballot_2 (13 ms)
+[ RUN      ] VotingFixture.ballot_3
+[       OK ] VotingFixture.ballot_3 (2 ms)
+[ RUN      ] VotingFixture.ballotAdd_1
+[       OK ] VotingFixture.ballotAdd_1 (10 ms)
+[ RUN      ] VotingFixture.ballotAdd_2
+[       OK ] VotingFixture.ballotAdd_2 (2 ms)
+[ RUN      ] VotingFixture.ballotAdd_3
+[       OK ] VotingFixture.ballotAdd_3 (2 ms)
+[ RUN      ] VotingFixture.ballotVotes_1
+[       OK ] VotingFixture.ballotVotes_1 (2 ms)
+[ RUN      ] VotingFixture.ballotVotes_2
+[       OK ] VotingFixture.ballotVotes_2 (2 ms)
+[ RUN      ] VotingFixture.ballotVotes_3
+[       OK ] VotingFixture.ballotVotes_3 (3 ms)
+[ RUN      ] VotingFixture.ballotPeek_1
+[       OK ] VotingFixture.ballotPeek_1 (3 ms)
+[ RUN      ] VotingFixture.ballotPeek_2
+[       OK ] VotingFixture.ballotPeek_2 (2 ms)
+[ RUN      ] VotingFixture.ballotPeek_3
+[       OK ] VotingFixture.ballotPeek_3 (3 ms)
+[ RUN      ] VotingFixture.ballotNext_1
+[       OK ] VotingFixture.ballotNext_1 (1 ms)
+[ RUN      ] VotingFixture.ballotNext_2
+[       OK ] VotingFixture.ballotNext_2 (2 ms)
+[ RUN      ] VotingFixture.ballotNext_3
+[       OK ] VotingFixture.ballotNext_3 (3 ms)
+[ RUN      ] VotingFixture.cand_addBallot1
+[       OK ] VotingFixture.cand_addBallot1 (16 ms)
+[ RUN      ] VotingFixture.cand_addBallot2
+[       OK ] VotingFixture.cand_addBallot2 (8 ms)
+[ RUN      ] VotingFixture.cand_addBallot3
+[       OK ] VotingFixture.cand_addBallot3 (9 ms)
+[ RUN      ] VotingFixture.cand_addRemoveBallot1
+[       OK ] VotingFixture.cand_addRemoveBallot1 (4 ms)
+[ RUN      ] VotingFixture.cand_addRemoveBallot2
+[       OK ] VotingFixture.cand_addRemoveBallot2 (4 ms)
+[ RUN      ] VotingFixture.cand_removeOnlyBallot1
+[       OK ] VotingFixture.cand_removeOnlyBallot1 (3 ms)
+[ RUN      ] VotingFixture.cand_removeTooMany1
+[       OK ] VotingFixture.cand_removeTooMany1 (3 ms)
+[ RUN      ] VotingFixture.cand_reset1
+[       OK ] VotingFixture.cand_reset1 (3 ms)
+[ RUN      ] VotingFixture.cand_reset2
+[       OK ] VotingFixture.cand_reset2 (3 ms)
+[ RUN      ] VotingFixture.cand_resetNone
+[       OK ] VotingFixture.cand_resetNone (2 ms)
+[ RUN      ] VotingFixture.cand_resetAfterRemove
+[       OK ] VotingFixture.cand_resetAfterRemove (4 ms)
+[ RUN      ] VotingFixture.cand_resetAfterRemoveEmpty
+[       OK ] VotingFixture.cand_resetAfterRemoveEmpty (2 ms)
+[ RUN      ] VotingFixture.cand_resetBeforeRemoveEmpty
+[       OK ] VotingFixture.cand_resetBeforeRemoveEmpty (3 ms)
+[ RUN      ] VotingFixture.cand_resetTwice
+[       OK ] VotingFixture.cand_resetTwice (2 ms)
+[ RUN      ] VotingFixture.cand_getName1
+[       OK ] VotingFixture.cand_getName1 (4 ms)
+[ RUN      ] VotingFixture.cand_getName2
+[       OK ] VotingFixture.cand_getName2 (3 ms)
+[ RUN      ] VotingFixture.cand_getName3
+[       OK ] VotingFixture.cand_getName3 (2 ms)
+[ RUN      ] VotingFixture.cand_get2SameName
+[       OK ] VotingFixture.cand_get2SameName (3 ms)
+[ RUN      ] VotingFixture.cand_exchangeBallots1
+[       OK ] VotingFixture.cand_exchangeBallots1 (3 ms)
+[ RUN      ] VotingFixture.cand_exchangeBallots2
+[       OK ] VotingFixture.cand_exchangeBallots2 (4 ms)
+[ RUN      ] VotingFixture.cand_exchangeBallots3
+[       OK ] VotingFixture.cand_exchangeBallots3 (6 ms)
+[ RUN      ] VotingFixture.cand_exchangeDifferentBallotsPeek
+[       OK ] VotingFixture.cand_exchangeDifferentBallotsPeek (6 ms)
+[ RUN      ] VotingFixture.cand_exchangeDifferentBallotsNext
+[       OK ] VotingFixture.cand_exchangeDifferentBallotsNext (5 ms)
+[ RUN      ] VotingFixture.cand_exchangeDifferentBallotsIntermediateReset
+[       OK ] VotingFixture.cand_exchangeDifferentBallotsIntermediateReset (5 ms)
+[ RUN      ] VotingFixture.cand_exchangeDifferentBallotsEmptyIntermediateReset
+[       OK ] VotingFixture.cand_exchangeDifferentBallotsEmptyIntermediateReset (4 ms)
+[ RUN      ] VotingFixture.cand_exchangeDifferentBallotsEmptyIntermediateResetRemoveTooMany
+[       OK ] VotingFixture.cand_exchangeDifferentBallotsEmptyIntermediateResetRemoveTooMany (5 ms)
+[ RUN      ] VotingFixture.electionInsert_1
+[       OK ] VotingFixture.electionInsert_1 (17 ms)
+[ RUN      ] VotingFixture.electionInsert_2
+[       OK ] VotingFixture.electionInsert_2 (1 ms)
+[ RUN      ] VotingFixture.electionInsert_3
+[       OK ] VotingFixture.electionInsert_3 (7 ms)
+[ RUN      ] VotingFixture.electionNumCand_1
+[       OK ] VotingFixture.electionNumCand_1 (3 ms)
+[ RUN      ] VotingFixture.electionNumCand_2
+[       OK ] VotingFixture.electionNumCand_2 (7 ms)
+[ RUN      ] VotingFixture.electionNumCand_3
+[       OK ] VotingFixture.electionNumCand_3 (3 ms)
+[ RUN      ] VotingFixture.election_winner1
+[       OK ] VotingFixture.election_winner1 (3 ms)
+[ RUN      ] VotingFixture.election_winner2
+[       OK ] VotingFixture.election_winner2 (12 ms)
+[ RUN      ] VotingFixture.election_winner3
+[       OK ] VotingFixture.election_winner3 (6 ms)
+[ RUN      ] VotingFixture.election_winner4
+[       OK ] VotingFixture.election_winner4 (5 ms)
+[ RUN      ] VotingFixture.election_winnerNoBallotsNoCandidates
+[       OK ] VotingFixture.election_winnerNoBallotsNoCandidates (2 ms)
+[ RUN      ] VotingFixture.election_winnerNoBallots
+[       OK ] VotingFixture.election_winnerNoBallots (4 ms)
 [ RUN      ] VotingFixture.solve_1
-[       OK ] VotingFixture.solve_1 (24 ms)
-[----------] 1 test from VotingFixture (29 ms total)
+[       OK ] VotingFixture.solve_1 (15 ms)
+[ RUN      ] VotingFixture.solve_2
+[       OK ] VotingFixture.solve_2 (11 ms)
+[ RUN      ] VotingFixture.solve_3
+[       OK ] VotingFixture.solve_3 (10 ms)
+[----------] 56 tests from VotingFixture (291 ms total)
 
 [----------] Global test environment tear-down
-[==========] 1 test from 1 test case ran. (53 ms total)
-[  PASSED  ] 1 test.
-==9737== 
-==9737== HEAP SUMMARY:
-==9737==     in use at exit: 0 bytes in 0 blocks
-==9737==   total heap usage: 223 allocs, 223 frees, 46,036 bytes allocated
-==9737== 
-==9737== All heap blocks were freed -- no leaks are possible
-==9737== 
-==9737== For counts of detected and suppressed errors, rerun with: -v
-==9737== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[==========] 56 tests from 1 test case ran. (315 ms total)
+[  PASSED  ] 56 tests.
+==2923== 
+==2923== HEAP SUMMARY:
+==2923==     in use at exit: 0 bytes in 0 blocks
+==2923==   total heap usage: 1,547 allocs, 1,547 frees, 157,090 bytes allocated
+==2923== 
+==2923== All heap blocks were freed -- no leaks are possible
+==2923== 
+==2923== For counts of detected and suppressed errors, rerun with: -v
+==2923== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 File 'Voting.c++'
-Lines executed:60.47% of 43
-Branches executed:62.79% of 86
-Taken at least once:32.56% of 86
-Calls executed:53.85% of 52
+Lines executed:97.71% of 131
+Branches executed:98.78% of 164
+Taken at least once:65.85% of 164
+Calls executed:79.85% of 134
 Creating 'Voting.c++.gcov'
 File 'TestVoting.c++'
-Lines executed:100.00% of 8
-Branches executed:80.00% of 40
-Taken at least once:40.00% of 40
-Calls executed:61.36% of 44
+Lines executed:100.00% of 359
+Branches executed:76.17% of 1880
+Taken at least once:38.24% of 1880
+Calls executed:61.95% of 2397
 Creating 'TestVoting.c++.gcov'

@@ -1,5 +1,5 @@
 // ----------------------------
-// cs371p-collatz/Voting.h
+// cs371p-collatz/Voting.c++
 // Copyright (C) 2016
 // Alex and David
 // ----------------------------
@@ -88,7 +88,7 @@ vector<Candidate> Election::findWinners(void) {
   vector<Candidate> winners;
   int numCandidates = candidates.size();
 
-  if(numCandidates == 0)
+  if(numCandidates == 0 || numBallots == 0)
     return candidates;
 
   int max, currentVotes, min;
@@ -159,6 +159,7 @@ vector<Candidate> Election::findWinners(void) {
 
 void Election::addBallot(Ballot b) {
   int candIndex = b.peekVote();
+  assert(candIndex <= (int) candidates.size());
   ++numBallots;
   candidates[candIndex - 1].addBallot(b);
 }
@@ -179,6 +180,7 @@ void voting_solve(istream &r, ostream &w) {
 
   getline(r, s);
   num_cases = stoi(s);
+  assert(num_cases >= 0);
 
   getline(r, s); // consume new line character
 
@@ -187,6 +189,7 @@ void voting_solve(istream &r, ostream &w) {
     Election election;
     getline(r, s);
     num_candidates = stoi(s);
+    assert(num_candidates <= 20);
 
     if(num_cases == 1) {
       end = string(1, EOF);
@@ -225,7 +228,9 @@ void voting_solve(istream &r, ostream &w) {
       w << winners[i].getName() << endl;
     }
 
+    if(num_cases > 1)
+      w << endl;
+
     --num_cases;
-    w << endl;
   }
 }
