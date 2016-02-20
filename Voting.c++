@@ -15,10 +15,6 @@ using namespace std;
 
 Ballot::Ballot() { }
 
-Ballot::Ballot(const Ballot &source) {
-  votes = source.votes;
-}
-
 Ballot::Ballot(vector<int> v) {
   votes = v;
 }
@@ -30,7 +26,7 @@ int Ballot::getVotesLeft(void) {
 int Ballot::nextVote(void) {
   // No votes left for this candidate.
   if(getVotesLeft() == 0)
-    return 0;
+    return -1;
 
   int ret = votes[index++];
   return ret;
@@ -49,9 +45,8 @@ int Ballot::peekVote(void) {
 
 ////////////////////////////////////
 
-Candidate::Candidate(string n, int i) {
+Candidate::Candidate(string n) {
   name = n;
-  candidateIndex = i;
 }
 
 // remove a ballot from a candidate, removing that Candidate from the Ballot
@@ -69,10 +64,6 @@ void Candidate::resetNumVotes(void) {
 void Candidate::addBallot(Ballot b) {
   ++numVotes;
   ballots.push_back(b);
-}
-
-int Candidate::getIndex(void) {
-  return candidateIndex;
 }
 
 int Candidate::getNumVotes(void) {
@@ -144,11 +135,9 @@ vector<Candidate> Election::findWinners(void) {
                 foundLoser = true;
                 // receiver is not a loser
                 receiver.addBallot(loserBallot);
-                // candidates[receiverIndex] = receiver;
               }
             }
             c.resetNumVotes();
-            // candidates[i] = c;
             assert(candidates[i].getNumVotes() == 0);
           }
         }
@@ -211,10 +200,8 @@ void voting_solve(istream &r, ostream &w) {
       // Look for candidate names
       for(int j = 0; j < num_candidates; ++j) {
         getline(r, s);
-        //
-        Candidate cand(s, j + 1);
+        Candidate cand(s);
         election.insert(cand);
-        //
       }
     }
 
@@ -226,22 +213,18 @@ void voting_solve(istream &r, ostream &w) {
       int num = -1;
       for(int i = 0; i < num_candidates; ++i) {
         sin >> num;
-        //if(num >= 10)
-        //  w << "we aren't shitters\n";
         b.addVote(num);
       }
 
-      //
       election.addBallot(b);
-      //
     }
+
     vector<Candidate> winners = election.findWinners();
 
     for(int i = 0; i < (int) winners.size(); ++i) {
       w << winners[i].getName() << endl;
     }
 
-    // reset vector
     --num_cases;
     w << endl;
   }

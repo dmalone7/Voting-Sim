@@ -11,9 +11,6 @@
 
 using namespace std;
 
-const int MAX_CANDIDATES = 20;
-const int MAX_BALLOTS = 1000;
-
 /**
  * A single ballot that contains an ordered list of Candidate indices.
  */
@@ -28,12 +25,6 @@ public:
   Ballot();
 
   /**
-   * Copies the votes from a ballot
-   * @param source the source ballot
-   */
-  Ballot(const Ballot &source);
-
-  /**
    * Create a ballot from a pre-existing vector of indices
    * @param v the vector
    */
@@ -46,7 +37,7 @@ public:
 
   /**
    * removes the first candidate index in the ballot 
-   * @return the first candidate number
+   * @return the first candidate number, -1 if none left
    */
   int nextVote(void);    
 
@@ -56,7 +47,8 @@ public:
   void addVote(int v);   
 
   /**
-   * @return the next vote (not removed)
+   * gets the next vote without removing it
+   * @return the next candidate index, -1 if none left
    */
   int peekVote(void);     
 };
@@ -68,7 +60,6 @@ class Candidate {
 private:
   vector<Ballot> ballots; 
   int numVotes = 0;           
-  int candidateIndex;         
   int index = 0;
   string name;          
 public:
@@ -76,24 +67,23 @@ public:
    * @param n name of the Candidate
    * @param i the index of the Candidate
    */
-  Candidate(string n, int i);
+  Candidate(string n);
 
   /** 
-   * @return the removed ballot which has had the first Candidate index removed
+   * @return the next removed ballot 
    */
   Ballot removeBallot(void);
 
   /** 
+   * Add a ballot and increase numVotes
    * @param b the ballot to add
    */
   void addBallot(Ballot b); 
 
-  void resetNumVotes(void);
-
-  /** 
-   * @return this Candidate's index
+  /**
+   * Reset the number of votes to 0
    */
-  int getIndex(void);       
+  void resetNumVotes(void);
 
   /** 
    * @return the number of votes for this Candidate
