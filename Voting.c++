@@ -247,9 +247,4 @@ void voting_solve(istream &r, ostream &w) {
 
     --num_cases;
   }
-
-  //   // reset vector
-  //   --num_cases;
-  //   w << endl;
-  // }
 }

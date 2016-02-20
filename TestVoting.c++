@@ -154,7 +154,7 @@ TEST(VotingFixture, cand_addBallot2) {
 
 TEST(VotingFixture, cand_addBallot3) {
   Candidate c("three", 3);
-  c.addBallot(Ballot({3, 2, 1}));
+  c.addBallot(Ballot({2, 3, 1}));
   c.addBallot(Ballot({2, 3, 1}));
   c.addBallot(Ballot({2, 3, 1}));
   c.addBallot(Ballot({2, 3, 1}));
@@ -166,6 +166,67 @@ TEST(VotingFixture, cand_addBallot3) {
   ASSERT_EQ(v, r);
 }
 
+// ----
+// Election
+// ----
+
+// -----
+// electionInsert
+// -----
+
+TEST(VotingFixture, electionInsert_1) {
+  Election e;
+  Candidate c("David", 1);
+  e.insert(c);
+  ASSERT_EQ(e.getNumCandidates(), 1);
+}
+
+TEST(VotingFixture, electionInsert_2) {
+  Election e;
+  ASSERT_EQ(e.getNumCandidates(), 0);
+}
+
+TEST(VotingFixture, electionInsert_3) {
+  Election e;
+  for(int i = 0; i < 10; i++) {
+    Candidate c("David", i + 1);
+    e.insert(c);
+  }
+  ASSERT_EQ(e.getNumCandidates(), 10);
+}
+
+// -----
+// electionNumCandidates
+// -----
+
+TEST(VotingFixture, electionNumCand_1) {
+  Election e;
+  Candidate a("Alex", 1);
+  e.insert(a);
+  Candidate d("David", 2);
+  e.insert(d);
+  ASSERT_EQ(e.getNumCandidates(), 2);
+}
+
+TEST(VotingFixture, electionNumCand_2) {
+  Election e;
+  e.findWinners();
+  ASSERT_EQ(e.getNumCandidates(), 0);
+}
+
+TEST(VotingFixture, electionNumCand_3) {
+  Election e;
+  for(int i = 0; i < 10; i++) {
+    Candidate c("Candidate", i + 1);
+    e.insert(c);
+  }
+  ASSERT_EQ(e.getNumCandidates(), 10);
+}
+
+// -----
+//  
+// -----
+
 // -----
 // solve
 // -----
@@ -173,36 +234,27 @@ TEST(VotingFixture, cand_addBallot3) {
 TEST(VotingFixture, solve_1) {
   string in ("1\n\n0");
   string out("no candidates\n");
-
   istringstream r(in);
   ostringstream w;
-  
   voting_solve(r, w);
-  
   ASSERT_EQ(out, w.str());
 }
 
 TEST(VotingFixture, solve_2) {
   string in ("1\n\n2\nA\nB\n1 2\n2 1");
   string out("A\nB\n");
-
   istringstream r(in);
   ostringstream w;
-  
   voting_solve(r, w);
-  
   ASSERT_EQ(out, w.str());
 }
 
 TEST(VotingFixture, solve_3) {
   string in ("1\n\n4\nA\nB\nC\nD\n1 2 3 4\n1 2 3 4\n2 1 3 4\n2 1 3 4\n3 1 2 4\n4 1 2 3");
   string out("A\n");
-
   istringstream r(in);
   ostringstream w;
-  
   voting_solve(r, w);
-  
   ASSERT_EQ(out, w.str());
 }
 
