@@ -1,3 +1,15 @@
+commit 91a50920d2f84e95cf30d345ea68032bb0895c0f
+Author: Alexander Collins <agcollins@utexas.edu>
+Date:   Fri Feb 19 20:06:48 2016 -0600
+
+    this is really the last commit. had two extra files.
+
+commit 16e26bf624d15979317a82bd7894a43b53ad61f8
+Author: Alexander Collins <agcollins@utexas.edu>
+Date:   Fri Feb 19 19:46:37 2016 -0600
+
+    Merge dev, added Voting.log
+
 commit f299126bf1a4b5da9b9b5f94353077b554b43d21
 Merge: 65661a2 3ada374
 Author: Alexander Collins <agcollins@utexas.edu>
