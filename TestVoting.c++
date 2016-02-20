@@ -94,6 +94,8 @@ TEST(VotingFixture, ballotPeek_1) {
 
 TEST(VotingFixture, ballotPeek_2) {
   Ballot b;
+  b.addVote(1);
+  b.nextVote();
   ASSERT_EQ(b.peekVote(), -1);
 }
 
